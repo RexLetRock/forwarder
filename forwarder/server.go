@@ -16,6 +16,7 @@ const MaxClientTopic = 1000
 var ConnHandleMap = NewConcurrentMap()
 
 func ServerStart(address string) {
+	logrus.Warnf("Start forwarder at %v \n", address)
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Fatalf("Start forwarder server err %v \n", err)
@@ -45,9 +46,8 @@ type ConnHandle struct {
 	readerRes *io.PipeReader
 	writerRes *io.PipeWriter
 
-	buffer []byte
-	// slice  []byte
-	conn net.Conn
+	buffer []byte // slice  []byte
+	conn   net.Conn
 }
 
 func ConnHandleCreate(conn net.Conn) *ConnHandle {
